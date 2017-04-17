@@ -30,4 +30,24 @@ describe Oystercard do
     end
   end
 
+  describe '#in_journey?' do
+    it "expects a newly created Oystercard to not be in use on a journey" do
+      expect(subject.in_journey).to eq false
+    end
+  end
+
+  describe '#touch_in' do
+    it "expects a card that has been touched in to be in use on a journey" do
+      subject.touch_in
+      expect(subject.in_journey).to eq true
+    end
+  end
+
+  describe '#touch_out' do
+    it "expects a card that has been touched out to not be in use on a journey" do
+      subject.touch_out
+      expect(subject.in_journey).to eq false
+    end
+  end
+
 end
