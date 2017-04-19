@@ -1,12 +1,13 @@
 ## The Oystercard class is responsible for creating and managing oystercards
 class Oystercard
-  attr_reader :balance, :entry_station
+  attr_reader :balance, :entry_station, :exit_station, :journey_history
   MAX_BALANCE = 90
   MIN_BALANCE = 1
   MIN_FARE    = 1
 
   def initialize
     @balance = 0
+    @journey_history = {}
   end
 
   def top_up(n)
@@ -26,9 +27,10 @@ class Oystercard
     @entry_station = station
   end
 
-  def touch_out
+  def touch_out(station)
     deduct(MIN_FARE)
     @entry_station = nil
+    @exit_station = station
   end
 
   private

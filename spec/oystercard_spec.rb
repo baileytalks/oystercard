@@ -4,10 +4,11 @@ describe Oystercard do
   MAX_BALANCE = 90
   MIN_BALANCE = 1
   MIN_FARE = 1
-  let(:station) { 'London' }
-
-  it 'has default balance of 0' do
-    expect(subject.balance).to eq(0)
+  let(:station) { 'Aldgate East' }
+  describe '#balance' do
+    it 'has default balance of 0' do
+      expect(subject.balance).to eq(0)
+    end
   end
 
   describe 'topping up' do
@@ -44,28 +45,38 @@ describe Oystercard do
     it 'saves an entry station' do
       subject.top_up(5)
       subject.touch_in(station)
-      expect(subject.entry_station).to eq 'London'
+      expect(subject.entry_station).to eq station
     end
   end
 
   describe '#touch_out' do
-    it 'changes back to false when touching out' do
+    before do
       subject.top_up(5)
       subject.touch_in(station)
-      subject.touch_out
+    end
+
+    it 'changes back to false when touching out' do
+      subject.touch_out(station)
       expect(subject.in_journey?).to eq false
     end
 
     it 'forgets entry_station' do
-      subject.top_up(5)
-      subject.touch_in(station)
-      expect { subject.touch_out }.to change { subject.entry_station }.to eq nil
+      expect { subject.touch_out(station) }.to change { subject.entry_station }.to eq nil
     end
 
     it 'deducts the minimum fare when touching out' do
-      subject.top_up(5)
-      subject.touch_in(station)
-      expect { subject.touch_out }.to change { subject.balance }.by(-MIN_FARE)
+      expect { subject.touch_out(station) }.to change { subject.balance }.by(-MIN_FARE)
+    end
+
+    it 'records an exit station on touching out' do
+      subject.touch_out(station)
+      expect(subject.exit_station).to eq station
+    end
+  end
+
+  describe '#journey_history' do
+    it 'creates an empty journey history every time a new card is created' do
+      expect(subject.journey_history).to be_empty
     end
   end
 end
