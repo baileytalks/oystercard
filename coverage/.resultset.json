@@ -1,6 +1,26 @@
 {
   "RSpec": {
     "coverage": {
+      "/Users/baileykursar/Projects/oystercard/spec/journey_spec.rb": [
+        1,
+        null,
+        1,
+        2,
+        2,
+        null,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/Users/baileykursar/Projects/oystercard/lib/journey.rb": [
+        1,
+        null,
+        null
+      ],
       "/Users/baileykursar/Projects/oystercard/spec/oystercard_spec.rb": [
         1,
         null,
@@ -144,9 +164,9 @@
         1,
         null,
         1,
+        2,
         null,
-        null,
-        null,
+        2,
         null,
         1,
         1,
@@ -160,16 +180,17 @@
         null
       ],
       "/Users/baileykursar/Projects/oystercard/lib/station.rb": [
+        null,
         1,
         1,
         null,
         1,
-        2,
-        2,
+        4,
+        4,
         null,
         null
       ]
     },
-    "timestamp": 1492612174
+    "timestamp": 1492624383
   }
 }

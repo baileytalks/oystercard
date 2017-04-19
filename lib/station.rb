@@ -1,3 +1,4 @@
+## This class creates new tube stations from thin air
 class Station
   attr_reader :zone, :name
 
