@@ -47,6 +47,12 @@ describe Oystercard do
       subject.touch_in(station)
       expect(subject.entry_station).to eq station
     end
+
+    it 'records entry station when touching in to journey history' do
+      subject.top_up(5)
+      subject.touch_in(station)
+      expect(subject.journey_history).to eq ({:entry_station => station})
+    end
   end
 
   describe '#touch_out' do
@@ -68,9 +74,15 @@ describe Oystercard do
       expect { subject.touch_out(station) }.to change { subject.balance }.by(-MIN_FARE)
     end
 
-    it 'records an exit station on touching out' do
+    # it 'records an exit station on touching out' do
+    #   subject.touch_out(station)
+    #   expect(subject.exit_station).to eq station
+    # end
+
+    it 'records exit station when touching out to journey history' do
       subject.touch_out(station)
-      expect(subject.exit_station).to eq station
+      hash = ({:entry_station => station, :exit_station => station})
+      expect(subject.journey_history).to eq hash
     end
   end
 
