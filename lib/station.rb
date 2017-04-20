@@ -1,8 +1,9 @@
-## This class understands how to create a new tube station
+## This class understands how to create a new location from where a journey
+## can either begin or end
 class Station
-  attr_reader :zone, :name
+  attr_reader :name, :zone
 
-  def initialize(name = 'Mystery Station', zone = 100)
+  def initialize(name, zone)
     @name = name
     @zone = zone
   end

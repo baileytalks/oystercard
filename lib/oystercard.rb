@@ -1,12 +1,12 @@
 require_relative 'station'
 require_relative 'journey'
 
-## This class is responsible for creating and managing oystercards
+## This class is responsible for creating items that allow users
+## to travel between stations, with a monetary balance
 class Oystercard
-  attr_reader :balance, :entry_station, :journey_history
+  attr_reader :balance, :new_journey
   MAX_BALANCE = 90
   MIN_BALANCE = 1
-  MIN_FARE    = 1
 
   def initialize
     @balance = 0
@@ -18,19 +18,24 @@ class Oystercard
     @balance += n
   end
 
-  # def in_journey?
-  #   !!@entry_station
-  # end
-
-  def touch_in(station)
+  def touch_in(station, zone)
     message = "Not enough balance. You'll need £#{MIN_BALANCE}."
     raise message if @balance < MIN_BALANCE
-    @new_journey = Journey.new(station)
+    create_journey.start_journey(create_station(station, zone))
   end
 
-  def touch_out(station)
-    deduct(MIN_FARE)
-    @new_journey.end_journey(station)
+  def touch_out(station, zone)
+    create_journey if @new_journey.nil?
+    @new_journey.end_journey(create_station(station, zone))
+    deduct(@new_journey.fare)
+  end
+
+  def create_journey
+    @new_journey = Journey.new
+  end
+
+  def create_station(station, zone)
+    @station = Station.new(station, zone)
   end
 
   private
