@@ -1,4 +1,4 @@
-## This class creates new tube stations from thin air
+## This class understands how to create a new tube station
 class Station
   attr_reader :zone, :name
 
