@@ -1,0 +1,5 @@
+require './lib/oystercard'
+card = Oystercard.new
+card.top_up(10)
+bank = Station.new('Bank',1)
+angel = Station.new('Angel',2)
