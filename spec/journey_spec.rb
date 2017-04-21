@@ -1,20 +1,23 @@
 require 'journey'
 
 describe Journey do
-  let(:card)    { Oystercard.new }
-  let(:station) { 'Test Station' }
-  let(:zone)    { 1 }
+  let(:entry_station) { double :entry_station, name: 'Entry Station', zone: 1 }
+  let(:exit_station) { double :exit_station, name: 'Exit Station', zone: 2 }
 
-  it 'the journey is incomplete if the card only touches out' do
-    card.top_up(10)
-    card.touch_out(station, zone)
-    expect(card.new_journey.journey_info[:complete]).to eq false
+  it '#start_journey' do
+    subject.start_journey(entry_station)
+    expect(subject.journey_info[:complete]).to eq false
   end
 
-  it 'the journey is complete if the card touches in and touches out' do
-    card.top_up(10)
-    card.touch_in(station, zone)
-    card.touch_out(station, zone)
-    expect(card.new_journey.journey_info[:complete]).to eq true
+  it '#end_journey' do
+    subject.start_journey(entry_station)
+    subject.end_journey(exit_station)
+    expect(subject.journey_info[:complete]).to eq true
+  end
+
+  it '#complete?' do
+    subject.start_journey(entry_station)
+    subject.end_journey(exit_station)
+    expect(subject.complete?).to eq true
   end
 end
